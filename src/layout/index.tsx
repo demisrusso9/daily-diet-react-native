@@ -1,19 +1,20 @@
 import { KeyboardAvoidingView, Platform } from 'react-native'
 import { Container } from './styles'
 
-interface DefaultContainerProps {
+interface LayoutProps {
   children: React.ReactNode
 }
 
-export function DefaultContainer({ children }: DefaultContainerProps) {
+export function Layout({ children }: LayoutProps) {
   return (
     <Container>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         enabled={Platform.OS === 'ios'}
         behavior='padding'
-      />
-      {children}
+      >
+        {children}
+      </KeyboardAvoidingView>
     </Container>
   )
 }
