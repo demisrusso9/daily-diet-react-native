@@ -3,7 +3,7 @@ import { Statistics } from '@/components/Statistics'
 import { StatisticsCards } from '@/components/StatisticsCards'
 import { Container, Content, RowCards, Text } from './styles'
 
-export function GeneralStatistics() {
+export function Stats() {
   const { navigate } = useNavigation()
 
   function handleNavigateToHome() {

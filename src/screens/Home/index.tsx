@@ -7,7 +7,7 @@ export function Home() {
   const { navigate } = useNavigation()
 
   function handleNavigateToStatistics() {
-    navigate('statistics')
+    navigate('stats')
   }
 
   return (
