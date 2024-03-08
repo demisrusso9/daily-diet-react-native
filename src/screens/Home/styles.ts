@@ -1,5 +1,11 @@
 import styled from 'styled-components/native'
 
-export const Container = styled.View`
+export const Content = styled.View`
     
+`
+
+export const Title = styled.Text`
+  margin: 40px 0 8px;
+  color: ${({ theme }) => theme.colors.gray1};
+  font-size: ${({ theme }) => theme.fontSize.md}px;
 `
