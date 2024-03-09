@@ -1,20 +1,28 @@
 import { useNavigation } from '@react-navigation/native'
 import { Statistics } from '@/components/Statistics'
 import { StatisticsCards } from '@/components/StatisticsCards'
-import { Container, Content, RowCards, Text } from './styles'
+import { Content, RowCards, Text } from './styles'
 
 export function Stats() {
+  const number = 50
   const { navigate } = useNavigation()
 
   function handleNavigateToHome() {
     navigate('home')
   }
 
+  const variantByPercentage = () => {
+    return number >= 50 ? 'primary' : 'secondary'
+  }
+
   return (
     <>
-      <Container>
-        <Statistics onPress={handleNavigateToHome} icon='arrow-left' />
-      </Container>
+      <Statistics
+        onPress={handleNavigateToHome}
+        icon='arrow-left'
+        variant={variantByPercentage()}
+        size='large'
+      />
 
       <Content>
         <Text>Estatísticas gerais</Text>

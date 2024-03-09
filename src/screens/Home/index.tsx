@@ -8,20 +8,34 @@ import { Content, Title } from './styles'
 
 export function Home() {
   const { navigate } = useNavigation()
+  const number = 50
 
   function handleNavigateToStatistics() {
     navigate('stats')
+  }
+
+  function handleNavigateToMeal() {
+    navigate('meal')
+  }
+
+  const variantByPercentage = () => {
+    return number >= 50 ? 'primary' : 'secondary'
   }
 
   return (
     <Layout>
       <Header />
 
-      <Statistics onPress={handleNavigateToStatistics} icon='arrow-up-right' />
+      <Statistics
+        onPress={handleNavigateToStatistics}
+        icon='arrow-up-right'
+        variant={variantByPercentage()}
+        size='small'
+      />
 
       <Content>
         <Title>Refeições</Title>
-        <Button text='Nova Refeição' showIcon />
+        <Button text='Nova Refeição' showIcon onPress={handleNavigateToMeal} />
       </Content>
     </Layout>
   )

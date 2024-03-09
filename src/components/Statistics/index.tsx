@@ -2,24 +2,44 @@ import {
   Container,
   IconArrowLeft,
   IconArrowUpRight,
+  Title,
   Percentage,
   Description,
   ButtonIcon,
-  IconButtonProps
+  IconButtonProps,
+  ContainerProps
 } from './styles'
 import { TouchableOpacityProps } from 'react-native'
 
-interface StatisticsProps extends IconButtonProps, TouchableOpacityProps {}
+interface StatisticsProps
+  extends IconButtonProps,
+    ContainerProps,
+    TouchableOpacityProps {}
 
-export function Statistics({ icon, ...rest }: StatisticsProps) {
+export function Statistics({
+  icon,
+  variant,
+  size = 'small',
+  ...rest
+}: StatisticsProps) {
   return (
-    <Container>
-      <ButtonIcon icon={icon} {...rest}>
-        {icon === 'arrow-left' ? <IconArrowLeft /> : <IconArrowUpRight />}
+    <Container variant={variant} size={size}>
+      <ButtonIcon icon={icon} size={size} {...rest}>
+        {icon === 'arrow-left' ? (
+          <IconArrowLeft variant={variant} />
+        ) : (
+          <IconArrowUpRight variant={variant} />
+        )}
       </ButtonIcon>
 
-      <Percentage>90,86%</Percentage>
-      <Description>das refeições dentro da dieta</Description>
+      {size === 'medium' ? (
+        <Title>Nova Refeição</Title>
+      ) : (
+        <>
+          <Percentage>90,86%</Percentage>
+          <Description>das refeições dentro da dieta</Description>
+        </>
+      )}
     </Container>
   )
 }
