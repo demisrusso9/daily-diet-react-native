@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Statistics } from '@/components/Statistics'
-import { Content, Form, FormColumn, FormRow, Input, Label } from './styles'
 import { Button } from '@/components/Button'
 import { ConfirmationButton } from '@/components/ConfirmationButton'
+import { mealCreate } from '@/storage/meal/mealCreate'
+import { randomUUID } from 'expo-crypto'
+import { Content, Form, FormColumn, FormRow, Input, Label } from './styles'
 
 export function Meal() {
   const { navigate } = useNavigation()
@@ -23,17 +25,20 @@ export function Meal() {
     setFocusedButton(button)
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     try {
       const meal = {
+        id: randomUUID(),
         name,
         description,
         date,
         time,
-        diet: focusedButton,
+        diet: focusedButton
       }
-    } catch {
-      
+
+      await mealCreate(meal)
+    } catch (error) {
+      console.log(error)
     }
   }
 
