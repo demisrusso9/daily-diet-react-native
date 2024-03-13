@@ -8,7 +8,7 @@ interface Meal {
   description: string;
   date: string;
   time: string;
-  diet: string | null;
+  diet: boolean;
 }
 
 export async function mealCreate(meal: Meal) {

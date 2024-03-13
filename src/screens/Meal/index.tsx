@@ -15,7 +15,7 @@ export function Meal() {
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
 
-  const [focusedButton, setFocusedButton] = useState<null | string>(null)
+  const [focusedButton, setFocusedButton] = useState('')
 
   function handleNavigateToHome() {
     navigate('home')
@@ -27,16 +27,20 @@ export function Meal() {
 
   async function handleSubmit() {
     try {
+      const diet = focusedButton === 'sim' ? true : false
+
       const meal = {
         id: randomUUID(),
         name,
         description,
         date,
         time,
-        diet: focusedButton
+        diet
       }
 
       await mealCreate(meal)
+
+      navigate('dietMessage', { diet })
     } catch (error) {
       console.log(error)
     }
