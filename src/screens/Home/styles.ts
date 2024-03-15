@@ -9,3 +9,10 @@ export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.gray1};
   font-size: ${({ theme }) => theme.fontSize.md}px;
 `
+
+export const Date = styled.Text`
+  margin-top: 40px;
+  color: ${({ theme }) => theme.colors.gray1};
+  font-size: ${({ theme }) => theme.fontSize.ml}px;
+  font-family: ${({ theme }) => theme.fontFamily.bold};
+`
