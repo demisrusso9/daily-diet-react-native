@@ -5,7 +5,19 @@ import { Button } from '@/components/Button'
 import { ConfirmationButton } from '@/components/ConfirmationButton'
 import { mealCreate } from '@/storage/meal/mealCreate'
 import { randomUUID } from 'expo-crypto'
-import { Content, Form, FormColumn, FormRow, Input, Label } from './styles'
+import {
+  Content,
+  Form,
+  FormColumn,
+  FormRow,
+  Input,
+  Label,
+  InputDateAndTime,
+  TextDateAndTime
+} from './styles'
+import { View } from 'react-native'
+import { formatTime } from '@/utils/formatTime'
+import DateTimePicker from 'react-native-modal-datetime-picker'
 
 export function Meal() {
   const { navigate } = useNavigation()
@@ -16,6 +28,29 @@ export function Meal() {
   const [time, setTime] = useState('')
 
   const [focusedButton, setFocusedButton] = useState('')
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false)
+  const [datePicker, setDatePicker] = useState<Date>()
+  const [timePicker, setTimePicker] = useState<Date>()
+
+  const toggleDatePicker = () => {
+    setDatePickerVisibility(!isDatePickerVisible)
+  }
+
+  const toggleTimePicker = () => {
+    setTimePickerVisibility(!isTimePickerVisible)
+  }
+
+  const handleDateConfirm = (date: Date) => {
+    setDatePicker(date)
+    toggleDatePicker()
+  }
+
+  const handleTimeConfirm = (time: Date) => {
+    setTimePicker(time)
+    toggleTimePicker()
+  }
 
   function handleNavigateToHome() {
     navigate('home')
@@ -81,24 +116,42 @@ export function Meal() {
           <FormRow>
             <FormColumn style={{ flex: 1 }}>
               <Label>Data</Label>
-              <Input
-                keyboardAppearance='dark'
-                enterKeyHint='done'
-                keyboardType='decimal-pad'
-                value={date}
-                onChangeText={setDate}
-              />
+              <View>
+                <DateTimePicker
+                  isVisible={isDatePickerVisible}
+                  mode='date'
+                  date={datePicker}
+                  isDarkModeEnabled={true}
+                  onConfirm={handleDateConfirm}
+                  onCancel={toggleDatePicker}
+                />
+
+                <InputDateAndTime onPress={toggleDatePicker}>
+                  <TextDateAndTime>
+                    {datePicker && datePicker.toLocaleDateString('pt-BR')}
+                  </TextDateAndTime>
+                </InputDateAndTime>
+              </View>
             </FormColumn>
 
             <FormColumn style={{ flex: 1 }}>
               <Label>Hora</Label>
-              <Input
-                keyboardAppearance='dark'
-                enterKeyHint='done'
-                keyboardType='decimal-pad'
-                value={time}
-                onChangeText={setTime}
-              />
+              <View>
+                <DateTimePicker
+                  isVisible={isTimePickerVisible}
+                  mode='time'
+                  date={timePicker}
+                  isDarkModeEnabled={true}
+                  onConfirm={handleTimeConfirm}
+                  onCancel={toggleTimePicker}
+                />
+
+                <InputDateAndTime onPress={toggleTimePicker}>
+                  <TextDateAndTime>
+                    {timePicker && formatTime(timePicker)}
+                  </TextDateAndTime>
+                </InputDateAndTime>
+              </View>
             </FormColumn>
           </FormRow>
 

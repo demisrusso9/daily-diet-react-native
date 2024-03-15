@@ -40,3 +40,18 @@ export const Input = styled.TextInput<InputProps>`
   border-radius: 6px;
   padding: 0 24px;
 `
+
+export const InputDateAndTime = styled.TouchableOpacity<InputProps>`
+  height: 48px;
+  border: 1px solid ${({ theme, isFocused }) => isFocused ? theme.colors.gray1 : theme.colors.gray5};
+  border-radius: 6px;
+  padding: 0 24px;
+  justify-content: center;
+  align-items: center;
+`
+
+export const TextDateAndTime = styled.Text`
+  color: ${({ theme }) => theme.colors.gray1};
+  font-size: ${({ theme }) => theme.fontSize.md}px;
+  font-family: ${({ theme }) => theme.fontFamily.regular};
+`
