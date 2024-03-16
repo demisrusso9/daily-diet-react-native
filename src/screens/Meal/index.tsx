@@ -15,7 +15,7 @@ import {
   InputDateAndTime,
   TextDateAndTime
 } from './styles'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import { formatTime } from '@/utils/formatTime'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 
@@ -24,8 +24,6 @@ export function Meal() {
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [date, setDate] = useState('')
-  const [time, setTime] = useState('')
 
   const [focusedButton, setFocusedButton] = useState('')
 
@@ -61,6 +59,16 @@ export function Meal() {
   }
 
   async function handleSubmit() {
+    if (
+      name.trim().length === 0 ||
+      description.trim().length === 0 ||
+      !datePicker ||
+      !timePicker ||
+      !focusedButton
+    ) {
+      return Alert.alert('Preencha todos os campos')
+    }
+
     try {
       const diet = focusedButton === 'sim' ? true : false
 
@@ -68,8 +76,8 @@ export function Meal() {
         id: randomUUID(),
         name,
         description,
-        date,
-        time,
+        date: datePicker,
+        time: timePicker,
         diet
       }
 
@@ -108,6 +116,7 @@ export function Meal() {
               keyboardAppearance='dark'
               enterKeyHint='done'
               expandedView
+              multiline
               value={description}
               onChangeText={setDescription}
             />

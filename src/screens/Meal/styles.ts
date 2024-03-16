@@ -38,7 +38,10 @@ export const Input = styled.TextInput<InputProps>`
   height: ${({ expandedView }) => expandedView ? 120 : 48}px;
   border: 1px solid ${({ theme, isFocused }) => isFocused ? theme.colors.gray1 : theme.colors.gray5};
   border-radius: 6px;
-  padding: 0 24px;
+  padding: 24px;
+  padding-top: ${({ expandedView }) => expandedView ? 24 : 0}px;
+  padding-bottom: ${({ expandedView }) => expandedView ? 24 : 0}px;
+  line-height: 20px;
 `
 
 export const InputDateAndTime = styled.TouchableOpacity<InputProps>`
