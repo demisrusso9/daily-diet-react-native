@@ -15,7 +15,7 @@ import {
   InputDateAndTime,
   TextDateAndTime
 } from './styles'
-import { Alert, View } from 'react-native'
+import { Alert, Keyboard, View } from 'react-native'
 import { formatTime } from '@/utils/formatTime'
 import DateTimePicker from 'react-native-modal-datetime-picker'
 
@@ -76,8 +76,8 @@ export function Meal() {
         id: randomUUID(),
         name,
         description,
-        date: datePicker,
-        time: timePicker,
+        date: datePicker.toString(),
+        time: timePicker.toString(),
         diet
       }
 
@@ -114,11 +114,15 @@ export function Meal() {
             <Label>Descrição</Label>
             <Input
               keyboardAppearance='dark'
-              enterKeyHint='done'
+              enterKeyHint='go'
               expandedView
               multiline
               value={description}
               onChangeText={setDescription}
+              blurOnSubmit={true}
+              onSubmitEditing={() => {
+                Keyboard.dismiss()
+              }}
             />
           </FormColumn>
 
@@ -157,7 +161,7 @@ export function Meal() {
 
                 <InputDateAndTime onPress={toggleTimePicker}>
                   <TextDateAndTime>
-                    {timePicker && formatTime(timePicker)}
+                    {timePicker && formatTime(timePicker.toString())}
                   </TextDateAndTime>
                 </InputDateAndTime>
               </View>

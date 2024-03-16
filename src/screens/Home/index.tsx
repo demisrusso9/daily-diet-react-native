@@ -1,12 +1,20 @@
-import { useNavigation } from '@react-navigation/native'
+import { Alert, FlatList } from 'react-native'
+import { useCallback, useState } from 'react'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { Layout } from '@/layout'
 import { Header } from '@/components/Header'
 import { Statistics } from '@/components/Statistics'
 import { Button } from '@/components/Button'
 
-import { Content, Title } from './styles'
+import { Content, Date, Title } from './styles'
+import { mealGetAll } from '@/storage/meal/mealGetAll'
+import { Meal } from '@/storage/meal/mealCreate'
+import { Card } from '@/components/Card'
+import { formatTime } from '@/utils/formatTime'
+import { formatDate } from '@/utils/formatDate'
 
 export function Home() {
+  const [cards, setCards] = useState<Meal[]>([])
   const { navigate } = useNavigation()
   const number = 50
 
@@ -22,6 +30,40 @@ export function Home() {
     return number >= 50 ? 'primary' : 'secondary'
   }
 
+  async function fetchMeals() {
+    try {
+      const data = await mealGetAll()
+      setCards(data)
+    } catch (error) {
+      Alert.alert('Refeições', 'Não foi possível buscar as refeições')
+    }
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchMeals()
+    }, [])
+  )
+
+  const groupedCards = {}
+
+  cards.forEach(card => {
+    const date = formatDate(card.date)
+
+    if (!groupedCards[date]) {
+      groupedCards[date] = []
+    }
+
+    groupedCards[date].push(card)
+  })
+
+  const groupedCardsArray = Object.keys(groupedCards).map(date => {
+    return {
+      date,
+      data: groupedCards[date]
+    }
+  })
+
   return (
     <Layout>
       <Header />
@@ -36,6 +78,27 @@ export function Home() {
       <Content>
         <Title>Refeições</Title>
         <Button text='Nova Refeição' showIcon onPress={handleNavigateToMeal} />
+
+        <FlatList
+          style={{ marginBottom: 300  }}
+          data={groupedCardsArray}
+          keyExtractor={item => item.date}
+          renderItem={({ item }) => (
+            <>
+              <Date>{item.date}</Date>
+
+              {item.data.map((card: Meal) => (
+                <Card
+                  key={card.id}
+                  name={card.name}
+                  time={formatTime(card.time)}
+                  inDiet={card.diet}
+                />
+              ))}
+            </>
+          )}
+          showsVerticalScrollIndicator={false}
+        />
       </Content>
     </Layout>
   )

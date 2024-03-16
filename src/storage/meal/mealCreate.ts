@@ -2,12 +2,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MEAL_COLLECTION } from "../config";
 import { mealGetAll } from "./mealGetAll";
 
-interface Meal {
+export interface Meal {
   id: string;
   name: string;
   description: string;
-  date: Date;
-  time: Date;
+  date: string;
+  time: string;
   diet: boolean;
 }
 

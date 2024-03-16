@@ -1,20 +1,18 @@
 import { Container, Time, Title, Diet, Bar } from './styles'
 
 interface CardProps {
-  card: {
-    time: string
-    title: string
-    inDiet: boolean
-  }
+  time: string
+  name: string
+  inDiet: boolean
 }
 
-export function Card({ card }: CardProps) {
+export function Card({ time, name, inDiet }: CardProps) {
   return (
     <Container>
-      <Time>{card.time}</Time>
+      <Time>{time}</Time>
       <Bar>|</Bar>
-      <Title numberOfLines={1}>{card.title}</Title>
-      <Diet inDiet={card.inDiet}>{card.inDiet}</Diet>
+      <Title numberOfLines={1}>{name}</Title>
+      <Diet inDiet={inDiet}>{inDiet}</Diet>
     </Container>
   )
 }

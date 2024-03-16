@@ -26,7 +26,7 @@ export const Bar = styled.Text`
 
 export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.gray2};
-  font-size: ${({ theme }) => theme.fontSize.md};
+  font-size: ${({ theme }) => theme.fontSize.md}px;
   font-family: ${({ theme }) => theme.fontFamily.regular};
   flex: 1;
 `
