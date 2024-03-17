@@ -14,12 +14,15 @@ import { TouchableOpacityProps } from 'react-native'
 interface StatisticsProps
   extends IconButtonProps,
     ContainerProps,
-    TouchableOpacityProps {}
+    TouchableOpacityProps {
+  percentage?: number
+}
 
 export function Statistics({
   icon,
   variant,
   size = 'small',
+  percentage,
   ...rest
 }: StatisticsProps) {
   return (
@@ -36,7 +39,7 @@ export function Statistics({
         <Title>Nova Refeição</Title>
       ) : (
         <>
-          <Percentage>90,86%</Percentage>
+          <Percentage>{percentage ? percentage : 0}%</Percentage>
           <Description>das refeições dentro da dieta</Description>
         </>
       )}

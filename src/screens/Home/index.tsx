@@ -12,11 +12,16 @@ import { Meal } from '@/storage/meal/mealCreate'
 import { Card } from '@/components/Card'
 import { formatTime } from '@/utils/formatTime'
 import { formatDate } from '@/utils/formatDate'
+import { mealGetStatistics } from '@/storage/meal/mealGetStatistics'
+
+interface GroupedCards {
+  [key: string]: Meal[]
+}
 
 export function Home() {
+  const [percentage, setPercentage] = useState(0)
   const [cards, setCards] = useState<Meal[]>([])
   const { navigate } = useNavigation()
-  const number = 50
 
   function handleNavigateToStatistics() {
     navigate('stats')
@@ -27,7 +32,12 @@ export function Home() {
   }
 
   const variantByPercentage = () => {
-    return number >= 50 ? 'primary' : 'secondary'
+    return percentage >= 50 ? 'primary' : 'secondary'
+  }
+
+  async function getPercentage() {
+    const data = await mealGetStatistics()
+    setPercentage(data.percentage)
   }
 
   async function fetchMeals() {
@@ -39,13 +49,7 @@ export function Home() {
     }
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchMeals()
-    }, [])
-  )
-
-  const groupedCards = {}
+  const groupedCards: GroupedCards = {}
 
   cards.forEach(card => {
     const date = formatDate(card.date)
@@ -64,6 +68,13 @@ export function Home() {
     }
   })
 
+  useFocusEffect(
+    useCallback(() => {
+      fetchMeals()
+      getPercentage()
+    }, [])
+  )
+
   return (
     <Layout>
       <Header />
@@ -73,6 +84,7 @@ export function Home() {
         icon='arrow-up-right'
         variant={variantByPercentage()}
         size='small'
+        percentage={percentage}
       />
 
       <Content>
@@ -80,7 +92,7 @@ export function Home() {
         <Button text='Nova Refeição' showIcon onPress={handleNavigateToMeal} />
 
         <FlatList
-          style={{ marginBottom: 300  }}
+          style={{ marginBottom: 300 }}
           data={groupedCardsArray}
           keyExtractor={item => item.date}
           renderItem={({ item }) => (
