@@ -10,7 +10,7 @@ export const Title = styled.Text`
   font-size: ${({ theme }) => theme.fontSize.md}px;
 `
 
-export const Date = styled.Text`
+export const TextDate = styled.Text`
   margin-top: 40px;
   color: ${({ theme }) => theme.colors.gray1};
   font-size: ${({ theme }) => theme.fontSize.ml}px;

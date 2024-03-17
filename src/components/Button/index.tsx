@@ -1,16 +1,26 @@
 import { TouchableOpacityProps } from 'react-native'
-import { Container, Title, IconPLus } from './styles'
+import {
+  Container,
+  Title,
+  IconPlus,
+  IconTrash,
+  IconPencilSimpleLine
+} from './styles'
 
 interface ButtonProps extends TouchableOpacityProps {
   text: string
-  showIcon?: boolean
+  icon?: 'plus' | 'trash' | 'pencil'
+  transparent?: boolean
 }
 
-export function Button({ text, showIcon, ...rest }: ButtonProps) {
+export function Button({ text, icon, transparent, ...rest }: ButtonProps) {
   return (
-    <Container {...rest}>
-      {showIcon && <IconPLus />}
-      <Title>{text}</Title>
+    <Container transparent={transparent} {...rest}>
+      {icon === 'plus' && <IconPlus transparent={transparent} />}
+      {icon === 'trash' && <IconTrash transparent={transparent} />}
+      {icon === 'pencil' && <IconPencilSimpleLine transparent={transparent} />}
+
+      <Title transparent={transparent}>{text}</Title>
     </Container>
   )
 }

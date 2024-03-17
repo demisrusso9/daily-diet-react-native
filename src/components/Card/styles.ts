@@ -4,7 +4,7 @@ interface DotProps {
   inDiet: boolean
 }
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
   border: 1px solid ${({ theme }) => theme.colors.gray5};
   margin-top: 8px;
   border-radius: 6px;

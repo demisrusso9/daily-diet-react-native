@@ -6,7 +6,7 @@ import { Header } from '@/components/Header'
 import { Statistics } from '@/components/Statistics'
 import { Button } from '@/components/Button'
 
-import { Content, Date, Title } from './styles'
+import { Content, TextDate, Title } from './styles'
 import { mealGetAll } from '@/storage/meal/mealGetAll'
 import { Meal } from '@/storage/meal/mealCreate'
 import { Card } from '@/components/Card'
@@ -31,6 +31,10 @@ export function Home() {
     navigate('meal')
   }
 
+  function handleNavigateToViewPage(card: Meal) {
+    navigate('view', { card })
+  }
+
   const variantByPercentage = () => {
     return percentage >= 50 ? 'primary' : 'secondary'
   }
@@ -52,7 +56,7 @@ export function Home() {
   const groupedCards: GroupedCards = {}
 
   cards.forEach(card => {
-    const date = formatDate(card.date)
+    const date = formatDate({ date: card.date, dotFormat: true })
 
     if (!groupedCards[date]) {
       groupedCards[date] = []
@@ -61,12 +65,22 @@ export function Home() {
     groupedCards[date].push(card)
   })
 
-  const groupedCardsArray = Object.keys(groupedCards).map(date => {
-    return {
-      date,
-      data: groupedCards[date]
-    }
-  })
+  const groupedCardsArray = Object.keys(groupedCards)
+    .map(date => {
+      return {
+        date,
+        data: groupedCards[date]
+      }
+    })
+    .sort((a, b) => {
+      const datePartsA = a.date.split('.').reverse()
+      const datePartsB = b.date.split('.').reverse()
+
+      const dateA = new Date(datePartsA.join('-'))
+      const dateB = new Date(datePartsB.join('-'))
+
+      return dateB.getTime() - dateA.getTime()
+    })
 
   useFocusEffect(
     useCallback(() => {
@@ -89,7 +103,11 @@ export function Home() {
 
       <Content>
         <Title>Refeições</Title>
-        <Button text='Nova Refeição' showIcon onPress={handleNavigateToMeal} />
+        <Button
+          text='Nova Refeição'
+          icon='plus'
+          onPress={handleNavigateToMeal}
+        />
 
         <FlatList
           style={{ marginBottom: 300 }}
@@ -97,10 +115,11 @@ export function Home() {
           keyExtractor={item => item.date}
           renderItem={({ item }) => (
             <>
-              <Date>{item.date}</Date>
+              <TextDate>{item.date}</TextDate>
 
               {item.data.map((card: Meal) => (
                 <Card
+                  onPress={() => handleNavigateToViewPage(card)}
                   key={card.id}
                   name={card.name}
                   time={formatTime(card.time)}

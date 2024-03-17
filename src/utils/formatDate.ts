@@ -1,4 +1,9 @@
-export function formatDate(date: string) {
+interface Props {
+  date: string;
+  dotFormat: boolean
+}
+
+export function formatDate({ date, dotFormat }: Props) {
   const dateObject = new Date(date)
 
   const formatter = new Intl.DateTimeFormat('pt-BR', {
@@ -7,5 +12,11 @@ export function formatDate(date: string) {
     year: '2-digit',
   });
 
-  return formatter.format(dateObject).replaceAll('/', '.');
+  const formattedDate = formatter.format(dateObject);
+
+  if (dotFormat) {
+    return formattedDate.replaceAll('/', '.');
+  }
+
+  return formattedDate
 }
