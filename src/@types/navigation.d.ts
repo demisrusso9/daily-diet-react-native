@@ -5,7 +5,10 @@ export declare global {
     interface RootParamList {
       home: undefined;
       stats: undefined;
-      meal: undefined;
+      meal: {
+        card?: Meal
+        editMode?: boolean
+      };
       view: {
         card: Meal
       };

@@ -1,4 +1,4 @@
-import { Meal } from "./mealCreate";
+import { MealType } from "@/@interface/meal";
 import { mealGetAll } from "./mealGetAll";
 
 export interface StatsProps {
@@ -13,12 +13,12 @@ export async function mealGetStatistics(): Promise<StatsProps> {
   const storage = await mealGetAll()
 
   const totalMeals = storage.length
-  const totalInDiet = storage.filter((meal: Meal) => meal.diet).length
-  const totalOffDiet = storage.filter((meal: Meal) => !meal.diet).length
+  const totalInDiet = storage.filter((meal: MealType) => meal.diet).length
+  const totalOffDiet = storage.filter((meal: MealType) => !meal.diet).length
   const percentage = Number(Math.round((totalInDiet / totalMeals) * 100).toFixed(2))
 
   let maxSequence = 0
-  const totalInDietSequence = storage.reduce((acc: number, curr: Meal) => {
+  const totalInDietSequence = storage.reduce((acc: number, curr: MealType) => {
     if (curr.diet) {
       maxSequence++
       acc = Math.max(acc, maxSequence)

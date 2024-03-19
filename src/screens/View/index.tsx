@@ -1,5 +1,15 @@
-import { Statistics } from '@/components/Statistics'
+import { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
+
+import { Statistics } from '@/components/Statistics'
+import { Modal } from '@/components/Modal'
+import { Button } from '@/components/Button'
+
+import { mealDelete } from '@/storage/meal/mealDelete'
+
+import { formatDate } from '@/utils/formatDate'
+import { formatTime } from '@/utils/formatTime'
+import { MealType } from '@/@interface/meal'
 import {
   Content,
   Name,
@@ -15,17 +25,9 @@ import {
   ModalText,
   ButtonsView
 } from './styles'
-import { Meal } from '@/storage/meal/mealCreate'
-import { Button } from '@/components/Button'
-import { formatDate } from '@/utils/formatDate'
-import { formatTime } from '@/utils/formatTime'
-import { mealDelete } from '@/storage/meal/mealDelete'
-import { Modal } from '@/components/Modal'
-import { useState } from 'react'
-import { View as RNView } from 'react-native'
 
 interface RouteParams {
-  card: Meal
+  card: MealType
 }
 
 export function View() {
@@ -53,6 +55,10 @@ export function View() {
     }
   }
 
+  function handleEditMeal() {
+    navigate('meal', { card, editMode: true })
+  }
+
   return (
     <>
       <Statistics
@@ -60,6 +66,7 @@ export function View() {
         icon='arrow-left'
         size='medium'
         variant={card.diet ? 'primary' : 'secondary'}
+        text='Refeição'
       />
 
       <Content>
@@ -69,7 +76,7 @@ export function View() {
           <Text>Data e hora</Text>
 
           <DateAndTime>
-            {formatDate({ date: card.date, dotFormat: false })} às
+            {formatDate({ date: card.date, dotFormat: false })} às{' '}
             {formatTime(card.time)}
           </DateAndTime>
 
@@ -79,8 +86,9 @@ export function View() {
           </TagView>
         </Division>
 
-        <Button text='Editar refeição' icon='pencil' />
+        <Button text='Editar refeição' icon='pencil' onPress={handleEditMeal} />
         <Button
+          style={{ marginBottom: 20 }}
           text='Excluir refeição'
           icon='trash'
           transparent

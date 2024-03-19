@@ -16,6 +16,7 @@ interface StatisticsProps
     ContainerProps,
     TouchableOpacityProps {
   percentage?: number
+  text?: string
 }
 
 export function Statistics({
@@ -23,6 +24,7 @@ export function Statistics({
   variant,
   size = 'small',
   percentage,
+  text,
   ...rest
 }: StatisticsProps) {
   return (
@@ -36,7 +38,7 @@ export function Statistics({
       </ButtonIcon>
 
       {size === 'medium' ? (
-        <Title>Nova Refeição</Title>
+        <Title>{text}</Title>
       ) : (
         <>
           <Percentage>{percentage ? percentage : 0}%</Percentage>

@@ -1,10 +1,13 @@
+import { useEffect, useState } from 'react'
+import { Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+
 import { Statistics } from '@/components/Statistics'
 import { StatisticsCards } from '@/components/StatisticsCards'
-import { Content, RowCards, Text } from './styles'
+
 import { StatsProps, mealGetStatistics } from '@/storage/meal/mealGetStatistics'
-import { Alert } from 'react-native'
-import { useEffect, useState } from 'react'
+
+import { Content, RowCards, Text } from './styles'
 
 export function Stats() {
   const [stats, setStats] = useState({} as StatsProps)

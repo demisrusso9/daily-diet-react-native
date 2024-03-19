@@ -1,10 +1,18 @@
 import { useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { Alert, Keyboard, View } from 'react-native'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import DateTimePicker from 'react-native-modal-datetime-picker'
+import { randomUUID } from 'expo-crypto'
+
 import { Statistics } from '@/components/Statistics'
 import { Button } from '@/components/Button'
 import { ConfirmationButton } from '@/components/ConfirmationButton'
+
 import { mealCreate } from '@/storage/meal/mealCreate'
-import { randomUUID } from 'expo-crypto'
+import { mealEdit } from '@/storage/meal/mealEdit'
+
+import { formatTime } from '@/utils/formatTime'
+import { MealType } from '@/@interface/meal'
 import {
   Content,
   Form,
@@ -15,22 +23,36 @@ import {
   InputDateAndTime,
   TextDateAndTime
 } from './styles'
-import { Alert, Keyboard, View } from 'react-native'
-import { formatTime } from '@/utils/formatTime'
-import DateTimePicker from 'react-native-modal-datetime-picker'
+
+interface RouteParams {
+  card: MealType
+  editMode: boolean
+}
 
 export function Meal() {
+  const route = useRoute()
+  const { card, editMode } = route.params as RouteParams
   const { navigate } = useNavigation()
 
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
+  const [name, setName] = useState((editMode && card.name) || '')
+  const [description, setDescription] = useState(
+    (editMode && card.description) || ''
+  )
 
-  const [focusedButton, setFocusedButton] = useState('')
+  const [focusedButton, setFocusedButton] = useState(
+    (editMode && (card.diet ? 'sim' : 'não')) || ''
+  )
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false)
-  const [datePicker, setDatePicker] = useState<Date>()
-  const [timePicker, setTimePicker] = useState<Date>()
+
+  const [datePicker, setDatePicker] = useState<Date | undefined>(
+    card?.date ? new Date(card.date) : undefined
+  )
+
+  const [timePicker, setTimePicker] = useState<Date | undefined>(
+    card?.time ? new Date(card.time) : undefined
+  )
 
   const toggleDatePicker = () => {
     setDatePickerVisibility(!isDatePickerVisible)
@@ -73,7 +95,7 @@ export function Meal() {
       const diet = focusedButton === 'sim' ? true : false
 
       const meal = {
-        id: randomUUID(),
+        id: editMode ? card.id : randomUUID(),
         name,
         description,
         date: datePicker.toString(),
@@ -81,7 +103,11 @@ export function Meal() {
         diet
       }
 
-      await mealCreate(meal)
+      if (editMode) {
+        await mealEdit(meal)
+      } else {
+        await mealCreate(meal)
+      }
 
       navigate('dietMessage', { diet })
     } catch (error) {
@@ -96,6 +122,7 @@ export function Meal() {
         icon='arrow-left'
         size='medium'
         variant='default'
+        text={editMode ? 'Editar refeição' : 'Nova refeição'}
       />
 
       <Content>
@@ -187,7 +214,11 @@ export function Meal() {
           </FormColumn>
         </Form>
 
-        <Button text='Cadastrar Refeição' onPress={handleSubmit} />
+        <Button
+          style={{ marginBottom: 20 }}
+          text={editMode ? 'Salvar alterações' : 'Cadastrar Refeição'}
+          onPress={handleSubmit}
+        />
       </Content>
     </>
   )
