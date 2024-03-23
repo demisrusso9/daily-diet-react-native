@@ -49,7 +49,7 @@ export const DateAndTime = styled.Text`
 export const TagView = styled.View<DotProps>`
   height: 34px;
   background-color: ${({ theme }) => theme.colors.gray6};
-  border-radius: 50%;
+  border-radius: 50px;
   padding: 8px 16px;
   flex-direction: row;
 
@@ -67,7 +67,7 @@ export const Tag = styled.View<DotProps>`
   height: 8px;
   width: 8px;
   background-color: ${({ theme, inDiet }) => inDiet ? theme.colors.greenDark : theme.colors.redDark};
-  border-radius: 50%;
+  border-radius: 50px;
   margin-right: 8px;
 `
 

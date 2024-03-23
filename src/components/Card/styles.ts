@@ -35,6 +35,6 @@ export const Diet = styled.View<DotProps>`
   background-color: ${({ theme, inDiet }) => inDiet ? theme.colors.greenMid : theme.colors.redMid};
   width: 14px;
   height: 14px;
-  border-radius: 100%;
+  border-radius: 50px;
   margin-left: 24px;
 `

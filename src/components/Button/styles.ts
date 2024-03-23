@@ -31,7 +31,7 @@ export const Container = styled.TouchableOpacity<ButtonColor>`
   align-items: center;
   flex-direction: row;
   border: 1px solid ${({ theme }) => theme.colors.gray1};
-  border-width: ${({ transparent }) => transparent ? '1px' : '0px'};
+  border-width: ${({ transparent }) => transparent ? 1 : 0}px;
 `
 
 export const Title = styled.Text<ButtonColor>`
