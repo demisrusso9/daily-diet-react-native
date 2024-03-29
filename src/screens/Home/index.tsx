@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { Alert, FlatList, View } from 'react-native'
+import { Alert, FlatList } from 'react-native'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 
 import { Header } from '@/components/Header'
@@ -92,14 +92,7 @@ export function Home() {
   )
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: 'lightblue',
-        padding: 24,
-        paddingTop: 80
-      }}
-    >
+    <Layout>
       <Header />
 
       <Statistics
@@ -140,6 +133,6 @@ export function Home() {
           showsVerticalScrollIndicator={false}
         />
       </Content>
-    </View>
+    </Layout>
   )
 }
