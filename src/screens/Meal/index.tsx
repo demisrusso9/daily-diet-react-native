@@ -215,7 +215,6 @@ export function Meal() {
         </Form>
 
         <Button
-          style={{ marginBottom: 20 }}
           text={editMode ? 'Salvar alterações' : 'Cadastrar Refeição'}
           onPress={handleSubmit}
         />

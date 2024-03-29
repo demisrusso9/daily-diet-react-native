@@ -1,14 +1,18 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components/native'
 
-export const Content = styled.View`
+export const Content = styled.ScrollView.attrs(() => ({
+  contentContainerStyle: {
+    alignItems: 'center',
+    gap: 16,
+    paddingBottom: 80,
+  }
+}))`
   padding: 24px;
   flex: 1;  
   background-color: ${({ theme }) => theme.colors.gray7};
   border-radius: 20px;
   margin-top: -35px;
-  align-items: center;
-  gap: 16px;
 `
 
 export const Text = styled.Text`

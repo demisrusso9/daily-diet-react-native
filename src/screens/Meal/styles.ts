@@ -14,9 +14,9 @@ export const Content = styled.View`
   gap: 16px;
 `
 
-export const Form = styled.View`
-  flex: 1;
-`
+export const Form = styled.ScrollView.attrs(() => ({
+  showsVerticalScrollIndicator: false
+}))``;
 
 export const FormColumn = styled.View`
   margin-bottom: 24px;
