@@ -1,4 +1,4 @@
-import { StatusBar, View } from 'react-native'
+import { StatusBar } from 'react-native'
 import {
   NunitoSans_400Regular,
   NunitoSans_700Bold,
@@ -16,16 +16,14 @@ export default function App() {
   })
 
   return (
-    <View style={{ flex: 1 }}>
-      <ThemeProvider theme={theme}>
-        <StatusBar
-          barStyle='dark-content'
-          backgroundColor='transparent'
-          translucent
-        />
+    <ThemeProvider theme={theme}>
+      <StatusBar
+        barStyle='dark-content'
+        backgroundColor='transparent'
+        translucent
+      />
 
-        {fontsLoaded ? <Routes /> : <Loading />}
-      </ThemeProvider>
-    </View>
+      {fontsLoaded ? <Routes /> : <Loading />}
+    </ThemeProvider>
   )
 }
