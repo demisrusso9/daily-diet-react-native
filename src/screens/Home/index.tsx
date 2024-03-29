@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { Alert, FlatList } from 'react-native'
+import { Alert, FlatList, View } from 'react-native'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 
 import { Header } from '@/components/Header'
@@ -12,7 +12,7 @@ import { mealGetAll } from '@/storage/meal/mealGetAll'
 import { mealGetStatistics } from '@/storage/meal/mealGetStatistics'
 import { formatTime } from '@/utils/formatTime'
 import { formatDate } from '@/utils/formatDate'
-import { MealType } from "@/@interface/meal";
+import { MealType } from '@/@interface/meal'
 
 import { Content, TextDate, Title } from './styles'
 
@@ -92,7 +92,14 @@ export function Home() {
   )
 
   return (
-    <Layout>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: 'lightblue',
+        padding: 24,
+        paddingTop: 80
+      }}
+    >
       <Header />
 
       <Statistics
@@ -133,6 +140,6 @@ export function Home() {
           showsVerticalScrollIndicator={false}
         />
       </Content>
-    </Layout>
+    </View>
   )
 }

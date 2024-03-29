@@ -8,7 +8,9 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal"
+      "android": {
+        "distribution": "internal"
+      }
     },
     "production": {},
     "testing": {
@@ -16,11 +18,6 @@
         "simulator": true
       }
     },
-    "android-test": {
-      "android": {
-        "buildType": "apk"
-      }
-    }
   },
   "submit": {
     "production": {}
