@@ -40,7 +40,7 @@ export function Meal() {
   )
 
   const [focusedButton, setFocusedButton] = useState(
-    (editMode && (card.diet ? 'sim' : 'não')) || ''
+    (editMode && (card.status ? 'sim' : 'não')) || ''
   )
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
@@ -92,7 +92,7 @@ export function Meal() {
     }
 
     try {
-      const diet = focusedButton === 'sim' ? true : false
+      const status = focusedButton === 'sim' ? true : false
 
       const meal = {
         id: editMode ? card.id : randomUUID(),
@@ -100,7 +100,7 @@ export function Meal() {
         description,
         date: datePicker.toString(),
         time: timePicker.toString(),
-        diet
+        status
       }
 
       if (editMode) {
@@ -109,7 +109,7 @@ export function Meal() {
         await mealCreate(meal)
       }
 
-      navigate('dietMessage', { diet })
+      navigate('dietStatusMessage', { status })
     } catch (error) {
       console.log(error)
     }

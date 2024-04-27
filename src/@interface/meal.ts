@@ -4,5 +4,5 @@ export interface MealType {
   description: string;
   date: string;
   time: string;
-  diet: boolean;
+  status: boolean;
 }

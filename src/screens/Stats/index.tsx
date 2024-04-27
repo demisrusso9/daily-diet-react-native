@@ -1,33 +1,19 @@
-import { useEffect, useState } from 'react'
-import { Alert } from 'react-native'
+import { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
 import { Statistics } from '@/components/Statistics'
 import { StatisticsCards } from '@/components/StatisticsCards'
 
-import { StatsProps, mealGetStatistics } from '@/storage/meal/mealGetStatistics'
-
 import { Content, RowCards, Text } from './styles'
+import { useDiet } from '@/hooks/useDiet'
 
 export function Stats() {
-  const [stats, setStats] = useState({} as StatsProps)
+  const { statistics, variantByPercentage, fetchStatistics } = useDiet()
+
   const { navigate } = useNavigation()
 
   function handleNavigateToHome() {
     navigate('home')
-  }
-
-  const variantByPercentage = () => {
-    return stats.percentage >= 50 ? 'primary' : 'secondary'
-  }
-
-  async function fetchStatistics() {
-    try {
-      const data = await mealGetStatistics()
-      setStats(data)
-    } catch (error) {
-      Alert.alert('Estatísticas', 'Não foi possível buscar as estatísticas')
-    }
   }
 
   useEffect(() => {
@@ -41,32 +27,32 @@ export function Stats() {
         icon='arrow-left'
         variant={variantByPercentage()}
         size='large'
-        percentage={stats.percentage}
+        percentage={statistics.percentage}
       />
 
       <Content>
         <Text>Estatísticas gerais</Text>
 
         <StatisticsCards
-          number={stats.totalInDietSequence}
+          number={statistics.totalInDietSequence}
           description='melhor sequência de pratos dentro da dieta'
         />
 
         <StatisticsCards
-          number={stats.totalMeals}
+          number={statistics.totalMeals}
           description='refeições registradas'
         />
 
         <RowCards>
           <StatisticsCards
             variant='primary'
-            number={stats.totalInDiet}
+            number={statistics.totalInDiet}
             description='refeições dentro da dieta'
           />
 
           <StatisticsCards
             variant='secondary'
-            number={stats.totalOffDiet}
+            number={statistics.totalOffDiet}
             description='refeições fora da dieta'
           />
         </RowCards>

@@ -12,8 +12,8 @@ export declare global {
       view: {
         card: Meal
       };
-      dietMessage: {
-        diet: boolean;
+      dietStatusMessage: {
+        status: boolean;
       };
     }
   }

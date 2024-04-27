@@ -7,12 +7,12 @@ import onDietImage from '@/assets/on-diet.png'
 import offDietImage from '@/assets/off-diet.png'
 
 type RouteParams = {
-  diet: boolean
+  status: boolean
 }
 
-export function DietMessage() {
+export function DietStatusMessage() {
   const route = useRoute()
-  const { diet } = route.params as RouteParams
+  const { status } = route.params as RouteParams
 
   const { navigate } = useNavigation()
 
@@ -23,9 +23,9 @@ export function DietMessage() {
   return (
     <Layout>
       <Content>
-        <Title diet={diet}>{diet ? 'Continue assim!' : 'Que pena!'}</Title>
+        <Title diet={status}>{status ? 'Continue assim!' : 'Que pena!'}</Title>
         <Subtitle>
-          {diet ? (
+          {status ? (
             <>
               Você continua
               <Bold> dentro da dieta</Bold>. Muito bem!
@@ -39,7 +39,7 @@ export function DietMessage() {
           )}
         </Subtitle>
 
-        <Image source={diet ? onDietImage : offDietImage} />
+        <Image source={status ? onDietImage : offDietImage} />
 
         <Button
           style={{ paddingLeft: 24, paddingRight: 24 }}

@@ -8,6 +8,7 @@ import { ThemeProvider } from 'styled-components/native'
 import theme from '@/theme'
 import { Loading } from '@/components/Loading'
 import { Routes } from '@/routes'
+import { DietContextProvider } from '@/contexts/DietContext'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -23,7 +24,9 @@ export default function App() {
         translucent
       />
 
-      {fontsLoaded ? <Routes /> : <Loading />}
+      <DietContextProvider>
+        {fontsLoaded ? <Routes /> : <Loading />}
+      </DietContextProvider>
     </ThemeProvider>
   )
 }

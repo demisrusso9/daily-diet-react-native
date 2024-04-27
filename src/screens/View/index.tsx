@@ -65,7 +65,7 @@ export function View() {
         onPress={handleNavigateToHome}
         icon='arrow-left'
         size='medium'
-        variant={card.diet ? 'primary' : 'secondary'}
+        variant={card.status ? 'primary' : 'secondary'}
         text='Refeição'
       />
 
@@ -80,9 +80,11 @@ export function View() {
             {formatTime(card.time)}
           </DateAndTime>
 
-          <TagView inDiet={card.diet}>
-            <Tag inDiet={card.diet} />
-            <TagText>{card.diet ? 'dentro da dieta' : 'fora da dieta'}</TagText>
+          <TagView inDiet={card.status}>
+            <Tag inDiet={card.status} />
+            <TagText>
+              {card.status ? 'dentro da dieta' : 'fora da dieta'}
+            </TagText>
           </TagView>
         </Division>
 

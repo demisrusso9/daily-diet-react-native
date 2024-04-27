@@ -9,20 +9,26 @@ import { Card } from '@/components/Card'
 import { Layout } from '@/layout'
 
 import { mealGetAll } from '@/storage/meal/mealGetAll'
-import { mealGetStatistics } from '@/storage/meal/mealGetStatistics'
 import { formatTime } from '@/utils/formatTime'
 import { formatDate } from '@/utils/formatDate'
 import { MealType } from '@/@interface/meal'
 
 import { Content, TextDate, Title } from './styles'
+import { useDiet } from '@/hooks/useDiet'
 
 interface GroupedCards {
   [key: string]: MealType[]
 }
 
 export function Home() {
-  const [percentage, setPercentage] = useState(0)
-  const [cards, setCards] = useState<MealType[]>([])
+  const {
+    cards,
+    statistics,
+    variantByPercentage,
+    fetchStatistics,
+    fetchMeals
+  } = useDiet()
+  
   const { navigate } = useNavigation()
 
   function handleNavigateToStatistics() {
@@ -35,24 +41,6 @@ export function Home() {
 
   function handleNavigateToViewPage(card: MealType) {
     navigate('view', { card })
-  }
-
-  const variantByPercentage = () => {
-    return percentage >= 50 ? 'primary' : 'secondary'
-  }
-
-  async function getPercentage() {
-    const data = await mealGetStatistics()
-    setPercentage(data.percentage)
-  }
-
-  async function fetchMeals() {
-    try {
-      const data = await mealGetAll()
-      setCards(data)
-    } catch (error) {
-      Alert.alert('Refeições', 'Não foi possível buscar as refeições')
-    }
   }
 
   const groupedCards: GroupedCards = {}
@@ -87,7 +75,7 @@ export function Home() {
   useFocusEffect(
     useCallback(() => {
       fetchMeals()
-      getPercentage()
+      fetchStatistics()
     }, [])
   )
 
@@ -100,7 +88,7 @@ export function Home() {
         icon='arrow-up-right'
         variant={variantByPercentage()}
         size='small'
-        percentage={percentage}
+        percentage={statistics.percentage}
       />
 
       <Content>
@@ -125,7 +113,7 @@ export function Home() {
                   key={card.id}
                   name={card.name}
                   time={formatTime(card.time)}
-                  inDiet={card.diet}
+                  inDiet={card.status}
                 />
               ))}
             </>
