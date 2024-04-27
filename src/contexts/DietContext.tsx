@@ -1,16 +1,17 @@
 import { Alert } from 'react-native'
-import { StatsProps, mealGetStatistics } from '@/storage/meal/mealGetStatistics'
+import { mealGetStatistics } from '@/storage/meal/mealGetStatistics'
 import { ReactNode, createContext, useState } from 'react'
 import { mealGetAll } from '@/storage/meal/mealGetAll'
-import { MealType } from '@/@interface/meal'
+import { IMeal } from '@/@interface/meal'
+import { IStatistics } from '@/@interface/statistics'
 
 interface DietProviderProps {
   children: ReactNode
 }
 
 interface DietContextData {
-  cards: MealType[]
-  statistics: StatsProps
+  cards: IMeal[]
+  statistics: IStatistics
   fetchStatistics: () => void
   fetchMeals: () => void
   variantByPercentage: () => 'primary' | 'secondary'
@@ -19,9 +20,9 @@ interface DietContextData {
 export const DietContext = createContext({} as DietContextData)
 
 export function DietContextProvider({ children }: DietProviderProps) {
-  const [cards, setCards] = useState<MealType[]>([])
+  const [cards, setCards] = useState<IMeal[]>([])
   const [percentage, setPercentage] = useState(0)
-  const [statistics, setStatistics] = useState({} as StatsProps)
+  const [statistics, setStatistics] = useState({} as IStatistics)
 
   async function fetchStatistics() {
     try {

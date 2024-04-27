@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react'
-import { Alert, FlatList } from 'react-native'
+import { useCallback } from 'react'
+import { FlatList } from 'react-native'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 
 import { Header } from '@/components/Header'
@@ -8,16 +8,15 @@ import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { Layout } from '@/layout'
 
-import { mealGetAll } from '@/storage/meal/mealGetAll'
 import { formatTime } from '@/utils/formatTime'
 import { formatDate } from '@/utils/formatDate'
-import { MealType } from '@/@interface/meal'
+import { IMeal } from '@/@interface/meal'
 
 import { Content, TextDate, Title } from './styles'
 import { useDiet } from '@/hooks/useDiet'
 
 interface GroupedCards {
-  [key: string]: MealType[]
+  [key: string]: IMeal[]
 }
 
 export function Home() {
@@ -28,7 +27,7 @@ export function Home() {
     fetchStatistics,
     fetchMeals
   } = useDiet()
-  
+
   const { navigate } = useNavigation()
 
   function handleNavigateToStatistics() {
@@ -39,7 +38,7 @@ export function Home() {
     navigate('meal', {})
   }
 
-  function handleNavigateToViewPage(card: MealType) {
+  function handleNavigateToViewPage(card: IMeal) {
     navigate('view', { card })
   }
 
@@ -107,7 +106,7 @@ export function Home() {
             <>
               <TextDate>{item.date}</TextDate>
 
-              {item.data.map((card: MealType) => (
+              {item.data.map((card: IMeal) => (
                 <Card
                   onPress={() => handleNavigateToViewPage(card)}
                   key={card.id}

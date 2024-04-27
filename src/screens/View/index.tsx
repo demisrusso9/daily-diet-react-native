@@ -9,7 +9,7 @@ import { mealDelete } from '@/storage/meal/mealDelete'
 
 import { formatDate } from '@/utils/formatDate'
 import { formatTime } from '@/utils/formatTime'
-import { MealType } from '@/@interface/meal'
+import { IMeal } from '@/@interface/meal'
 import {
   Content,
   Name,
@@ -27,7 +27,7 @@ import {
 } from './styles'
 
 interface RouteParams {
-  card: MealType
+  card: IMeal
 }
 
 export function View() {

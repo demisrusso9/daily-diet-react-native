@@ -12,7 +12,7 @@ import { mealCreate } from '@/storage/meal/mealCreate'
 import { mealEdit } from '@/storage/meal/mealEdit'
 
 import { formatTime } from '@/utils/formatTime'
-import { MealType } from '@/@interface/meal'
+import { IMeal } from '@/@interface/meal'
 import {
   Content,
   Form,
@@ -25,7 +25,7 @@ import {
 } from './styles'
 
 interface RouteParams {
-  card: MealType
+  card: IMeal
   editMode: boolean
 }
 
